@@ -279,7 +279,7 @@ if page == "Employment Duration and Loan Type":
 if page == "Purpose for Bad Loans":
     bad_loan_purpose_df = get_segmented_bad_loan_df('purpose').reset_index(drop=True).sort_values(by=['percent'], ascending=False)
     st.markdown(
-    """## <a style='display: block; text-align: center'>Purpose for Bad Loans</a>
+    """## <a style='display: block; text-align: center'>Purpose for Bad Loans (%)</a>
     """,
     unsafe_allow_html=True,
     )
@@ -294,8 +294,26 @@ if page == "Purpose for Bad Loans":
     fig.update_layout(title='Purpose for Bad Loans',title_x=0.5)
     fig.update_layout(title = {'font_color':'White', 'font_size':25})
     st.plotly_chart(fig)
+    bad_loan_purpose_df = get_segmented_bad_loan_df('purpose').reset_index(drop=True).sort_values(by=['count'], ascending=False)
+    st.markdown(
+    """## <a style='display: block; text-align: center'>Purpose for Bad Loans (Count)</a>
+    """,
+    unsafe_allow_html=True,
+    )
+    st.table(bad_loan_purpose_df.assign(hack='').set_index('hack'))
+    fig = px.bar(bad_loan_purpose_df, x="count", y="purpose", labels={
+                        'count': 'Count',
+                        'purpose': 'Purpose'}, orientation='h', hover_data = {'count':True})
+    fig.update_layout(yaxis={'categoryorder':'total ascending'})
+    fig.update_layout(width=700, height=550)
+    fig.update_traces(marker_color='maroon')
+    fig.update_layout(font_family="Arial", font_size = 15)
+    fig.update_layout(title='Purpose for Bad Loans (Total)',title_x=0.5)
+    fig.update_layout(title = {'font_color':'White', 'font_size':25})
+    st.plotly_chart(fig)
     st.markdown("<u>Observations:</u>",unsafe_allow_html=True)
-    st.markdown("- It is not surprising to see that the main purpose for 'Bad Loans' is for small business purpose with 26%. Small businesses often involve a lot of risks with poor cash flow.")
+    st.markdown("- Debt Consolidation seems to be way ahead in terms of total count.")
+    st.markdown("- It is not surprising to see that the main purpose for 'Bad Loans' in terms of proportion is for small business purpose with 26%. Small businesses often involve a lot of risks with poor cash flow.")
     st.markdown("- Renewable energy sits at the second spot. However, the count for renewable energy loans is only 19. Hence, it is still too early to decipher something out of it.")
     st.markdown("- Educational purpose is also not surpising to see since it is more of a long-term investment.")
     st.markdown("- Looks like the option 'other' is also prone to 'Bad Loans'.")
