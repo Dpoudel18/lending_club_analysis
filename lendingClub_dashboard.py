@@ -288,7 +288,7 @@ if page == "Borrower's Employer and Good Loan":
     new_df = dict(df[df['loan_type']=='Good Loans']['emp_title'].value_counts())
     good_loan_employer_df = pd.DataFrame(new_df.items(),columns = ['emp_title','count']).head(16)
     st.markdown(
-    """## <a style='display: block; text-align: center'>Borrower's Employer's and Good Loan</a>
+    """## <a style='display: block; text-align: center'>Borrower's Employer and Good Loan</a>
     """,
     unsafe_allow_html=True,
     )
@@ -329,7 +329,7 @@ if page == "Employment Duration and Loan Type":
     """,
     unsafe_allow_html=True,
     )
-    st.table(emp_length_bad_loan_df.assign(hack='').set_index('hack'))
+    #st.table(emp_length_bad_loan_df.assign(hack='').set_index('hack'))
     fig4 = plot_line_chart(emp_length_bad_loan_df, 'emp_length_years', 'percent','Bad Loan and Employment Duration','maroon')    
     st.plotly_chart(fig4)
     st.markdown("<u>Observations:</u>",unsafe_allow_html=True)
@@ -349,7 +349,7 @@ if page == "Purpose for Bad Loans":
                         'percent': 'Percent',
                         'purpose': 'Purpose'}, orientation='h', hover_data = {'count':True})
     fig.update_layout(yaxis={'categoryorder':'total ascending'})
-    fig.update_layout(width=700, height=550)
+    fig.update_layout(width=800, height=750)
     fig.update_traces(marker_color='maroon')
     fig.update_layout(font_family="Arial", font_size = 15)
     #fig.update_layout(title='Purpose for Bad Loans (%)',title_x=0.5)
@@ -365,7 +365,7 @@ if page == "Purpose for Bad Loans":
                         'count': 'Count',
                         'purpose': 'Purpose'}, orientation='h', hover_data = {'count':True})
     fig.update_layout(yaxis={'categoryorder':'total ascending'})
-    fig.update_layout(width=700, height=550)
+    fig.update_layout(width=800, height=750)
     fig.update_traces(marker_color='maroon')
     fig.update_layout(font_family="Arial", font_size = 15)
     #fig.update_layout(title='Purpose for Bad Loans (Total)',title_x=0.5)
