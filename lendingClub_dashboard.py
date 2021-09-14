@@ -185,7 +185,7 @@ if page == "Loan Segment by Term":
     )
     st.sidebar.table(loan_segment_by_term_df[['term','loan_type','percent']].assign(hack='').set_index('hack'))
 
-    fig = plot_grouped_bar_chart(loan_segment_by_term_df, 'term', 'percent', 'loan_type','Loan Segment by Term (Total)')
+    fig = plot_grouped_bar_chart(loan_segment_by_term_df, 'term', 'count', 'loan_type','Loan Segment by Term (Total)')
     st.plotly_chart(fig)
 
     fig2 = plot_grouped_bar_chart(loan_segment_by_term_df, 'term', 'percent', 'loan_type','Loan Segment by Term (%)')
@@ -235,7 +235,7 @@ if page == "Loan Segment by Grade":
     )
     st.sidebar.table(loan_segment_by_grade_df[['grade','loan_type','percent']].assign(hack='').set_index('hack'))
 
-    fig = plot_grouped_bar_chart(loan_segment_by_grade_df, 'grade', 'percent', 'loan_type','Loan Segment by Grade (Total)')
+    fig = plot_grouped_bar_chart(loan_segment_by_grade_df, 'grade', 'count', 'loan_type','Loan Segment by Grade (Count)')
     st.plotly_chart(fig)
 
     fig2 = plot_grouped_bar_chart(loan_segment_by_grade_df, 'grade', 'percent', 'loan_type','Loan Segment by Grade (%)')
