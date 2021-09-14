@@ -65,8 +65,8 @@ body {
     """, unsafe_allow_html=True)
 #st.title('Lending Club - Good Loans vs Bad Loans')
 #st.markdown("## Lending Club Dataset")
-st.markdown("<h1 style='text-align: center'>Good Loans and Bad Loans: Lending Club</h1>", unsafe_allow_html=True)
-
+st.markdown("<h1 style='text-align: center'>Good Loans and Bad Loans</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center'>Exploratory Data Analysis of<a href = https://www.kaggle.com/puneeshk/lending-loan-club-dataset target=_blank> Lending Club Loan Dataset</a></p>", unsafe_allow_html=True)
 
 
 options = ['Choose from Options','Loan Status', 'Loan Type', 'Loan Segment by Term', 'Loan Segment by Grade', "Employment Duration and Loan Type", "Borrower's Employer and Good Loan", "Purpose for Bad Loans"]
