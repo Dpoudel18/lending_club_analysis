@@ -40,13 +40,13 @@ def plot_pretty_pie_chart(label, value, title_name):
     fig.update_layout(width=600, height=550)
 
     # give title to the chart and align it to the center
-    fig.update_layout(title=title_name,title_x=0.5)
+    #fig.update_layout(title=title_name,title_x=0.5)
 
     # play around with the font and its size of the body
     fig.update_layout(font_family="Arial", font_size = 15)
 
     # play around with the font and its size of the title
-    fig.update_layout(title = {'font_color':'white', 'font_size':25})
+    fig.update_layout(title = {'font_color':'#e75480', 'font_size':25})
 
     # display the chart
     #fig.show()
@@ -65,23 +65,26 @@ body {
     """, unsafe_allow_html=True)
 #st.title('Lending Club - Good Loans vs Bad Loans')
 #st.markdown("## Lending Club Dataset")
-st.markdown("<h1 style='text-align: center; color: Pink;'>Good Loans and Bad Loans: Lending Club</h1>", unsafe_allow_html=True)
-st.sidebar.markdown("## What is 'Good Loans'?")
-st.sidebar.markdown('Loans with status of "Current", "Issued" or "Fully Paid".')
-st.sidebar.markdown("## What is 'Bad Loans'?")
-st.sidebar.markdown('Loans with status other than "Current", "Issued" or "Fully Paid".')
-#st.markdown("## Loan Status in Lending Club:")
-st.sidebar.markdown("## Questions to discover:")
-st.sidebar.markdown("- What proportion of loans are 'Good Loans/Bad Loans' based on term?")
-st.sidebar.markdown("- What proportion of loans are 'Good Loans/Bad Loans' based on grade?")
-st.sidebar.markdown("- Is 'Good Loans' somehow linked with the job of the borrowers?")
-st.sidebar.markdown("- Is 'Good Loans' somehow linked with the job duration of the borrowers?")
-st.sidebar.markdown("- What are the most frequent purpose values for 'Bad Loans'?")
+st.markdown("<h1 style='text-align: center'>Good Loans and Bad Loans: Lending Club</h1>", unsafe_allow_html=True)
+
 
 
 options = ['Choose from Options','Loan Status', 'Loan Type', 'Loan Segment by Term', 'Loan Segment by Grade', "Employment Duration and Loan Type", "Borrower's Employer and Good Loan", "Purpose for Bad Loans"]
 st.markdown("## What do you want to discover about?")
 page = st.selectbox("", options)
+
+if page == 'Choose from Options':
+    st.sidebar.markdown("## What is 'Good Loans'?")
+    st.sidebar.markdown('Loans with status of "Current", "Issued" or "Fully Paid".')
+    st.sidebar.markdown("## What is 'Bad Loans'?")
+    st.sidebar.markdown('Loans with status other than "Current", "Issued" or "Fully Paid".')
+    #st.markdown("## Loan Status in Lending Club:")
+    st.sidebar.markdown("## Questions to discover:")
+    st.sidebar.markdown("- What proportion of loans are 'Good Loans/Bad Loans' based on term?")
+    st.sidebar.markdown("- What proportion of loans are 'Good Loans/Bad Loans' based on grade?")
+    st.sidebar.markdown("- Is 'Good Loans' somehow linked with the job of the borrowers?")
+    st.sidebar.markdown("- Is 'Good Loans' somehow linked with the job duration of the borrowers?")
+    st.sidebar.markdown("- What are the most frequent purpose values for 'Bad Loans'?")
 
 # Loan Status
 if page == 'Loan Status':
@@ -93,16 +96,23 @@ if page == 'Loan Status':
     )
     loan_status_df = build_df('loan_status')
     st.write('')
-    st.table(loan_status_df.assign(hack='').set_index('hack'))
+    st.sidebar.markdown(
+        """## <a style='display: block; text-align: center'>Loan Status</a>
+        """,
+        unsafe_allow_html=True,
+    )
+    #st.table(loan_status_df.assign(hack='').set_index('hack'))
+    st.sidebar.table(loan_status_df.assign(hack='').set_index('hack'))
+    
     loan_status_type = loan_status_df['loan_status']
     loan_status_count = loan_status_df['count']
     fig = plot_pretty_pie_chart(loan_status_type, loan_status_count, 'Loan Status')
     st.plotly_chart(fig)
 
-    st.markdown("Out of 39717 data points, the loan status consist of:")
-    st.markdown('- 32,950 fully paid (83%)')
-    st.markdown('-  5,627 charged off (14.2%)')
-    st.markdown("-  1,140 current (2.87%)")
+    st.sidebar.markdown("Out of 39717 data points, the loan status consists of:")
+    st.sidebar.markdown('- 32,950 fully paid (83%)')
+    st.sidebar.markdown('-  5,627 charged off (14.2%)')
+    st.sidebar.markdown("-  1,140 current (2.87%)")
 
 
 #  Loan Type 
@@ -115,14 +125,20 @@ if page == 'Loan Type':
     )
     loan_type_df = build_df('loan_type')
     st.write('')
-    st.table(loan_type_df.assign(hack='').set_index('hack'))
+    #st.table(loan_type_df.assign(hack='').set_index('hack'))
+    st.sidebar.markdown(
+        """## <a style='display: block; text-align: center'>Loan Type</a>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.sidebar.table(loan_type_df.assign(hack='').set_index('hack'))
     loan_type = loan_type_df['loan_type']
     loan_type_count = loan_type_df['count']
     fig = plot_pretty_pie_chart(loan_type, loan_type_count, 'Loan Type')
     st.plotly_chart(fig)
-    st.markdown("Out of 39717 data points, the loan type consist of:")
-    st.markdown("- 34,090 'Good Loans' (85.8%)")
-    st.markdown("-  5,627 'Bad Loans' (14.2%)")
+    st.sidebar.markdown("Out of 39717 data points, the loan type consists of:")
+    st.sidebar.markdown("- 34,090 'Good Loans' (85.8%)")
+    st.sidebar.markdown("-  5,627 'Bad Loans' (14.2%)")
 
 #helper function
 def generate_df_by_segment_column(segment_col):
@@ -138,12 +154,12 @@ def plot_grouped_bar_chart(data, x_value, y_value, legend, title_name):
                     x_value: x_value.capitalize(),
                     y_value: y_value.capitalize()
                 }, barmode="group", hover_data = {'percent':True,'count':True},color_discrete_sequence=['maroon','#286086'])
-    fig.update_layout(width=600, height=550)
+    fig.update_layout(width=700, height=650)
     fig.update_layout()
-    fig.update_layout(title=title_name,title_x=0.5)
+    #fig.update_layout(title=title_name,title_x=0.5)
     fig.update_layout(legend_title_text='Loan type')
     fig.update_layout(font_family="Arial", font_size = 15)
-    fig.update_layout(title = {'font_color':'white', 'font_size':25})
+    fig.update_layout(title = {'font_color':'pink', 'font_size':25})
     return fig
 
 # Loan segment by term
@@ -151,25 +167,44 @@ if page == "Loan Segment by Term":
     
     loan_segment_by_term_df = generate_df_by_segment_column('term').reset_index()
     st.markdown(
-    """## <a style='display: block; text-align: center'>Loan Segment by Term</a>
+    """## <a style='display: block; text-align: center'>Loan Segment by Term (Count)</a>
     """,
     unsafe_allow_html=True,
     )
-    st.table(loan_segment_by_term_df.assign(hack='').set_index('hack'))
+    st.sidebar.markdown(
+    """## <a style='display: block; text-align: center'>Loan Segment by Term (Count)</a>
+    """,
+    unsafe_allow_html=True,
+    )
+    st.sidebar.table(loan_segment_by_term_df[['term','loan_type','count']].assign(hack='').set_index('hack'))
 
-    fig = plot_grouped_bar_chart(loan_segment_by_term_df, 'term', 'count', 'loan_type','Loan Segment by Term (Total)')
+    st.sidebar.markdown(
+    """## <a style='display: block; text-align: center'>Loan Segment by Term (%)</a>
+    """,
+    unsafe_allow_html=True,
+    )
+    st.sidebar.table(loan_segment_by_term_df[['term','loan_type','percent']].assign(hack='').set_index('hack'))
+
+    fig = plot_grouped_bar_chart(loan_segment_by_term_df, 'term', 'percent', 'loan_type','Loan Segment by Term (Total)')
     st.plotly_chart(fig)
 
     fig2 = plot_grouped_bar_chart(loan_segment_by_term_df, 'term', 'percent', 'loan_type','Loan Segment by Term (%)')
+
+    st.markdown(
+    """## <a style='display: block; text-align: center'>Loan Segment by Term (%)</a>
+    """,
+    unsafe_allow_html=True,
+    )
+
     st.plotly_chart(fig2)
 
-    st.markdown("For the term of 36 months, the loans constitutes of:")
-    st.markdown("- 25,869 'Good Loans' (89%)")
-    st.markdown("-  3,227 'Bad Loans' (11%)")
+    st.sidebar.markdown("For the term of 36 months, the loans constitutes of:")
+    st.sidebar.markdown("- 25,869 'Good Loans' (89%)")
+    st.sidebar.markdown("-  3,227 'Bad Loans' (11%)")
 
-    st.markdown("For the term of 60 months, the loans constitutes of:")
-    st.markdown("- 8,221 'Good Loans' (77%)")
-    st.markdown("-  2,400 'Bad Loans' (23%)")
+    st.sidebar.markdown("For the term of 60 months, the loans constitutes of:")
+    st.sidebar.markdown("- 8,221 'Good Loans' (77%)")
+    st.sidebar.markdown("-  2,400 'Bad Loans' (23%)")
     st.markdown("<u>Observations:</u>",unsafe_allow_html=True)
     st.markdown("- As we can notice, comparing the proportion, the 60 months term welcomes more 'Bad Loans' (almost twice).")
     st.markdown("- The 36 months term loan has a high count of 'Good Loans' as well low rate of 'Bad Loans'. Hence, it is beneficial for the firm to keep prioritizing this option.")
@@ -179,18 +214,38 @@ if page == "Loan Segment by Term":
 # Loan segment by Grade
 if page == "Loan Segment by Grade":
     
+    
     loan_segment_by_grade_df = generate_df_by_segment_column('grade').reset_index()
     st.markdown(
-    """## <a style='display: block; text-align: center'>Loan Segment by Grade</a>
+    """## <a style='display: block; text-align: center'>Loan Segment by Grade (Count)</a>
     """,
     unsafe_allow_html=True,
     )
-    st.table(loan_segment_by_grade_df.assign(hack='').set_index('hack'))
+    st.sidebar.markdown(
+    """## <a style='display: block; text-align: center'>Loan Segment by Grade (Count)</a>
+    """,
+    unsafe_allow_html=True,
+    )
+    st.sidebar.table(loan_segment_by_grade_df[['grade','loan_type','count']].assign(hack='').set_index('hack'))
 
-    fig = plot_grouped_bar_chart(loan_segment_by_grade_df, 'grade', 'count', 'loan_type','Loan Segment by Grade (Total)')
+    st.sidebar.markdown(
+    """## <a style='display: block; text-align: center'>Loan Segment by Grade (%)</a>
+    """,
+    unsafe_allow_html=True,
+    )
+    st.sidebar.table(loan_segment_by_grade_df[['grade','loan_type','percent']].assign(hack='').set_index('hack'))
+
+    fig = plot_grouped_bar_chart(loan_segment_by_grade_df, 'grade', 'percent', 'loan_type','Loan Segment by Grade (Total)')
     st.plotly_chart(fig)
 
     fig2 = plot_grouped_bar_chart(loan_segment_by_grade_df, 'grade', 'percent', 'loan_type','Loan Segment by Grade (%)')
+
+    st.markdown(
+    """## <a style='display: block; text-align: center'>Loan Segment by Grade (%)</a>
+    """,
+    unsafe_allow_html=True,
+    )
+
     st.plotly_chart(fig2)
     st.markdown("<u>Observations:</u>",unsafe_allow_html=True)
     st.markdown("- Majority of the loans issued have grade of A and B (almost 50%), which is good for the company.")
@@ -220,11 +275,11 @@ def plot_line_chart(data, x_value, y_value, title_name,color):
                         y_value: 'Percent'
                     }, hover_data = {'percent':True,'count':True},color_discrete_sequence=[color], orientation='h')
 
-    fig.update_layout(width=600, height=550)
-    fig.update_layout(title=title_name,title_x=0.5)
+    fig.update_layout(width=800, height=750)
+    #fig.update_layout(title=title_name,title_x=0.5)
     #fig.update_layout(legend_title_text='Loan type')
     fig.update_layout(font_family="Times New Roman", font_size = 15)
-    fig.update_layout(title = {'font_color':'white', 'font_size':25})
+    #fig.update_layout(title = {'font_color':'pink', 'font_size':25})
     return fig
 
 
@@ -255,22 +310,27 @@ if page == "Employment Duration and Loan Type":
     unsafe_allow_html=True,
     )
     st.table(emp_length_good_loan_df.assign(hack='').set_index('hack'))
-    fig3 = plot_line_chart(emp_length_good_loan_df, 'emp_length_years', 'percent','Good Loan and Employment Duration','yellow')
+    fig3 = plot_line_chart(emp_length_good_loan_df, 'emp_length_years', 'percent','Good Loan and Employment Duration','#286086')
     st.markdown("<u>Note:</u>", unsafe_allow_html= True)
     st.markdown(' - -1 in the dataframe corresponds to number of missing data in *emp_length_years* columns.')
     st.markdown(' - 0 in the dataframe corresponds to less than 1 year.')
     st.markdown(' - 10 in the dataframe corresponds to 10 or more years.', unsafe_allow_html=True)
+    st.markdown(
+    """## <a style='display: block; text-align: center'>Employment Duration and Good Loan (%)</a>
+    """,
+    unsafe_allow_html=True,
+    )
     st.plotly_chart(fig3)
     emp_length_bad_loan_df = generate_df_by_segment_column('emp_length_years').reset_index()
     emp_length_bad_loan_df = emp_length_bad_loan_df[emp_length_bad_loan_df['loan_type']=='Bad Loans']
     emp_length_bad_loan_df = emp_length_bad_loan_df.reset_index(drop=True)
     st.markdown(
-    """## <a style='display: block; text-align: center'>Employment Duration and Bad Loan</a>
+    """## <a style='display: block; text-align: center'>Employment Duration and Good Loan (Count)</a>
     """,
     unsafe_allow_html=True,
     )
     st.table(emp_length_bad_loan_df.assign(hack='').set_index('hack'))
-    fig4 = plot_line_chart(emp_length_bad_loan_df, 'emp_length_years', 'percent','Bad Loan and Employment Duration','orange')    
+    fig4 = plot_line_chart(emp_length_bad_loan_df, 'emp_length_years', 'percent','Bad Loan and Employment Duration','maroon')    
     st.plotly_chart(fig4)
     st.markdown("<u>Observations:</u>",unsafe_allow_html=True)
     st.markdown("- The lowest percentage of 'Good Loans' or the highest percentage of 'Bad Loans' exist in the category of missing values where people don't report their employment length. It is highly likely they don't have a job to pay their loans on time.") 
@@ -279,11 +339,12 @@ if page == "Employment Duration and Loan Type":
 if page == "Purpose for Bad Loans":
     bad_loan_purpose_df = get_segmented_bad_loan_df('purpose').reset_index(drop=True).sort_values(by=['percent'], ascending=False)
     st.markdown(
-    """## <a style='display: block; text-align: center'>Purpose for Bad Loans (%)</a>
+    """## <a style='display: block; text-align: center'>Purpose for Bad Loans</a>
     """,
     unsafe_allow_html=True,
     )
     st.table(bad_loan_purpose_df.assign(hack='').set_index('hack'))
+    #st.write(bad_loan_purpose_df.assign(hack='').set_index('hack'))
     fig = px.bar(bad_loan_purpose_df, x="percent", y="purpose", labels={
                         'percent': 'Percent',
                         'purpose': 'Purpose'}, orientation='h', hover_data = {'count':True})
@@ -291,16 +352,15 @@ if page == "Purpose for Bad Loans":
     fig.update_layout(width=700, height=550)
     fig.update_traces(marker_color='maroon')
     fig.update_layout(font_family="Arial", font_size = 15)
-    fig.update_layout(title='Purpose for Bad Loans',title_x=0.5)
-    fig.update_layout(title = {'font_color':'White', 'font_size':25})
-    st.plotly_chart(fig)
-    bad_loan_purpose_df = get_segmented_bad_loan_df('purpose').reset_index(drop=True).sort_values(by=['count'], ascending=False)
+    #fig.update_layout(title='Purpose for Bad Loans (%)',title_x=0.5)
+    #fig.update_layout(title = {'font_color':'maroon', 'font_size':25})
     st.markdown(
-    """## <a style='display: block; text-align: center'>Purpose for Bad Loans (Count)</a>
+    """## <a style='display: block; text-align: center'>Purpose for Bad Loans (Percent)</a>
     """,
     unsafe_allow_html=True,
     )
-    st.table(bad_loan_purpose_df.assign(hack='').set_index('hack'))
+    st.plotly_chart(fig)
+    bad_loan_purpose_df = get_segmented_bad_loan_df('purpose').reset_index(drop=True).sort_values(by=['count'], ascending=False)
     fig = px.bar(bad_loan_purpose_df, x="count", y="purpose", labels={
                         'count': 'Count',
                         'purpose': 'Purpose'}, orientation='h', hover_data = {'count':True})
@@ -308,8 +368,13 @@ if page == "Purpose for Bad Loans":
     fig.update_layout(width=700, height=550)
     fig.update_traces(marker_color='maroon')
     fig.update_layout(font_family="Arial", font_size = 15)
-    fig.update_layout(title='Purpose for Bad Loans (Total)',title_x=0.5)
-    fig.update_layout(title = {'font_color':'White', 'font_size':25})
+    #fig.update_layout(title='Purpose for Bad Loans (Total)',title_x=0.5)
+    #fig.update_layout(title = {'font_color':'maroon', 'font_size':25})
+    st.markdown(
+    """## <a style='display: block; text-align: center'>Purpose for Bad Loans (Count)</a>
+    """,
+    unsafe_allow_html=True,
+    )
     st.plotly_chart(fig)
     st.markdown("<u>Observations:</u>",unsafe_allow_html=True)
     st.markdown("- Debt Consolidation seems to be way ahead in terms of total count.")
