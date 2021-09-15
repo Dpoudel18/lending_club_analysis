@@ -95,6 +95,9 @@ if page == 'Loan Status':
         unsafe_allow_html=True,
     )
     loan_status_df = build_df('loan_status')
+    loan_status_df['percent'] = (loan_status_df['count'] / loan_status_df['count'].sum()) * 100
+    loan_status_df['percent'] = loan_status_df['percent'].round(1).astype(int)
+
     st.write('')
     st.sidebar.markdown(
         """## <a style='display: block; text-align: center'>Loan Status</a>
@@ -111,8 +114,8 @@ if page == 'Loan Status':
 
     st.sidebar.markdown("Out of 39717 data points, the loan status consists of:")
     st.sidebar.markdown('- 32,950 fully paid (83%)')
-    st.sidebar.markdown('-  5,627 charged off (14.2%)')
-    st.sidebar.markdown("-  1,140 current (2.87%)")
+    st.sidebar.markdown('-  5,627 charged off (14%)')
+    st.sidebar.markdown("-  1,140 current (3%)")
 
 
 #  Loan Type 
@@ -124,6 +127,8 @@ if page == 'Loan Type':
         unsafe_allow_html=True,
     )
     loan_type_df = build_df('loan_type')
+    loan_type_df['percent'] = (loan_type_df['count'] / loan_type_df['count'].sum()) * 100
+    loan_type_df['percent'] = loan_type_df['percent'].round(1).astype(int)
     st.write('')
     #st.table(loan_type_df.assign(hack='').set_index('hack'))
     st.sidebar.markdown(
@@ -137,8 +142,8 @@ if page == 'Loan Type':
     fig = plot_pretty_pie_chart(loan_type, loan_type_count, 'Loan Type')
     st.plotly_chart(fig)
     st.sidebar.markdown("Out of 39717 data points, the loan type consists of:")
-    st.sidebar.markdown("- 34,090 'Good Loans' (85.8%)")
-    st.sidebar.markdown("-  5,627 'Bad Loans' (14.2%)")
+    st.sidebar.markdown("- 34,090 'Good Loans' (85%)")
+    st.sidebar.markdown("-  5,627 'Bad Loans' (14%)")
 
 #helper function
 def generate_df_by_segment_column(segment_col):
