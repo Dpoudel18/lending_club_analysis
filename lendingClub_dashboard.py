@@ -96,7 +96,7 @@ if page == 'Loan Status':
     )
     loan_status_df = build_df('loan_status')
     loan_status_df['percent'] = (loan_status_df['count'] / loan_status_df['count'].sum()) * 100
-    loan_status_df['percent'] = loan_status_df['percent'].round(1).astype(int)
+    loan_status_df['percent'] = round(loan_status_df['percent'],0).astype(int)
 
     st.write('')
     st.sidebar.markdown(
@@ -128,7 +128,7 @@ if page == 'Loan Type':
     )
     loan_type_df = build_df('loan_type')
     loan_type_df['percent'] = (loan_type_df['count'] / loan_type_df['count'].sum()) * 100
-    loan_type_df['percent'] = loan_type_df['percent'].round(1).astype(int)
+    loan_type_df['percent'] = round(loan_type_df['percent'],0).astype(int)
     st.write('')
     #st.table(loan_type_df.assign(hack='').set_index('hack'))
     st.sidebar.markdown(
@@ -142,7 +142,7 @@ if page == 'Loan Type':
     fig = plot_pretty_pie_chart(loan_type, loan_type_count, 'Loan Type')
     st.plotly_chart(fig)
     st.sidebar.markdown("Out of 39717 data points, the loan type consists of:")
-    st.sidebar.markdown("- 34,090 'Good Loans' (85%)")
+    st.sidebar.markdown("- 34,090 'Good Loans' (86%)")
     st.sidebar.markdown("-  5,627 'Bad Loans' (14%)")
 
 #helper function
