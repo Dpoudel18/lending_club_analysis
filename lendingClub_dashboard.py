@@ -331,7 +331,7 @@ if page == "Employment Duration and Loan Type":
     unsafe_allow_html=True,
     )
     #st.table(emp_length_bad_loan_df.assign(hack='').set_index('hack'))
-    fig4 = plot_line_chart(emp_length_bad_loan_df, 'emp_length_years', 'count','Bad Loan and Employment Duration','maroon')    
+    fig4 = plot_line_chart(emp_length_bad_loan_df, 'emp_length_years', 'count','Bad Loan and Employment Duration','pink')    
     st.plotly_chart(fig4)
     st.markdown("<u>Observations:</u>",unsafe_allow_html=True)
     st.markdown("- The lowest percentage of 'Good Loans' or the highest percentage of 'Bad Loans' exist in the category of missing values where people don't report their employment length. It is highly likely they don't have a job to pay their loans on time.") 
