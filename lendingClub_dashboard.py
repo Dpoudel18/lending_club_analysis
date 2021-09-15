@@ -268,11 +268,11 @@ def get_segmented_bad_loan_df(var_name):
     return data
 
 # helper function to plot line chart
-def plot_line_chart(data, x_value, y_value, title_name,color):
+def plot_line_chart(data, x_value, y_value, title_name,color, type):
     df = data.reset_index()
     fig = px.line(data_frame=df, x=x_value, y=y_value, labels={
                         x_value: 'Employment Length (Years)',
-                        y_value: 'Percent'
+                        y_value: type.capitalize()
                     }, hover_data = {'percent':True,'count':True},color_discrete_sequence=[color], orientation='h')
 
     fig.update_layout(width=800, height=750)
@@ -311,7 +311,7 @@ if page == "Employment Duration and Loan Type":
     unsafe_allow_html=True,
     )
     st.table(emp_length_good_loan_df.assign(hack='').set_index('hack'))
-    fig3 = plot_line_chart(emp_length_good_loan_df, 'emp_length_years', 'percent','Good Loan and Employment Duration','pink')
+    fig3 = plot_line_chart(emp_length_good_loan_df, 'emp_length_years', 'percent','Good Loan and Employment Duration','pink','percent')
     st.markdown("<u>Note:</u>", unsafe_allow_html= True)
     st.markdown(' - -1 in the dataframe corresponds to number of missing data in *emp_length_years* columns.')
     st.markdown(' - 0 in the dataframe corresponds to less than 1 year.')
@@ -331,7 +331,7 @@ if page == "Employment Duration and Loan Type":
     unsafe_allow_html=True,
     )
     #st.table(emp_length_bad_loan_df.assign(hack='').set_index('hack'))
-    fig4 = plot_line_chart(emp_length_bad_loan_df, 'emp_length_years', 'count','Bad Loan and Employment Duration','pink')    
+    fig4 = plot_line_chart(emp_length_bad_loan_df, 'emp_length_years', 'count','Bad Loan and Employment Duration','pink','count')    
     st.plotly_chart(fig4)
     st.markdown("<u>Observations:</u>",unsafe_allow_html=True)
     st.markdown("- The lowest percentage of 'Good Loans' or the highest percentage of 'Bad Loans' exist in the category of missing values where people don't report their employment length. It is highly likely they don't have a job to pay their loans on time.") 
