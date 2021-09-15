@@ -335,7 +335,7 @@ if page == "Employment Duration and Loan Type":
     st.plotly_chart(fig4)
     st.markdown("<u>Observations:</u>",unsafe_allow_html=True)
     st.markdown("- The lowest percentage of 'Good Loans' or the highest percentage of 'Bad Loans' exist in the category of missing values where people don't report their employment length. It is highly likely they don't have a job to pay their loans on time.") 
-    st.markdown("- Also 'Good Loans' seems to be significant higher in 10+ years of employment category.")
+    st.markdown("- Also 'Good Loans' seems to be significant higher in 10+ years of employment length category.")
 
 if page == "Purpose for Bad Loans":
     bad_loan_purpose_df = get_segmented_bad_loan_df('purpose').reset_index(drop=True).sort_values(by=['percent'], ascending=False)
